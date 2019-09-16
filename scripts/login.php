@@ -38,13 +38,15 @@ else if(empty($password)){
 else{
     //search fake database for corresponding username
         
-    if($username == $database[0]->username && password_verify($password, $database[0]->hashedPwd)){
-        $_SESSION['success'] = "Logged in successfully";
-        header ("location: ../welcome.php");
-    }else{
-        $_SESSION['errors'][] = "Invalid login credentials". "</br>";
-        header('location: ../index.php');
-    }
+    foreach($database as $result) {
+        if($username == $result->username && password_verify($password, $result->hashedPwd)){
+            $_SESSION['success'] = "Logged in successfully";
+            header ("location: ../welcome.php");
+        }else{
+            $_SESSION['errors'][] = "Invalid login credentials". "</br>";
+            header('location: ../index.php');
+        }
+      }
       
 
 }
