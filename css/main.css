@@ -367,6 +367,10 @@ iframe {
   transition: opacity 0.4s;
 }
 
+.pb-2{
+  padding-bottom: 1rem; 
+}
+
 .alert-validate::after {
   content: "\f06a";
   font-family: 'Poppins', sans-serif;
