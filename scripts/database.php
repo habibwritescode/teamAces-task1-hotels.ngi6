@@ -2,9 +2,9 @@
 
 $database = array();
 class User{
-    var $username;
-    var $email;
-    var $hashedPwd;
+    public $username;
+    public $email;
+    public $hashedPwd;
 function __construct($Username, $Email, $HashedPwd){
     $this->username = $Username;
     $this->email = $Email;
@@ -16,6 +16,6 @@ function __construct($Username, $Email, $HashedPwd){
 
 //create test user
 
-$testuser = new User('aces123', 'aces123@gtest.com', password_hash("password123", PASSWORD_DEFAULT));
+$testuser = new User('aces123', 'aces123@gtest.com', password_hash("password", PASSWORD_DEFAULT));
 //insert user into db
 array_push($database, $testuser);

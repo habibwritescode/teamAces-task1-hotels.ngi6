@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 
 if(isset($_POST['login-submit'])){
 //user clicked submit button, implement logic
@@ -7,29 +9,41 @@ require "database.php";
 
 $username = $_POST['username'];
 $password = $_POST['password'];
+$_SESSION['errors'] = array();
+
 
 
 if(empty($password) && empty($username)){
-    header('location: ../index.php?error=emptyfields');
+    $_SESSION['errors'] [] = "Fill in all fields". "</br>";
+    header('location: ../index.php');
     exit();
 }
 else if(!preg_match("/^[a-zA-Z0-9]*$/", $username)){
-    header('location: ../index.php?error=invalidusername');
+	$_SESSION['errors'][] = "Username should contain only alphanumeric characters". "</br>";
+    header('location: ../index.php');
     exit();
 }
 else if(empty($username)){
-    header('location: ../index.php?error=usernameempty');
+	$_SESSION['errors'][] = "Username is a required field". "</br>";
+    header('location: ../index.php');
     exit();
 }
 
 else if(empty($password)){
-    header('location: ../index.php?error=passwordempty&username='.$username);
+    $_SESSION['errors'][] = "Password is a required field". "</br>";
+    header('location: ../index.php');
     exit();
 }
 
 else{
     //search fake database for corresponding username
-
+        
+    if($username == $database[0]->username && password_verify($password, $database[0]->hashedPwd)){
+        header ("location: ../login.html");
+    }else{
+        $_SESSION['errors'][] = "Invalid login credentials". "</br>";
+    }
+      
 
 }
 }
