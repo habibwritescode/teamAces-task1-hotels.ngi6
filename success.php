@@ -10,10 +10,8 @@
 </head>
 <body>
     <?php 
-    if(isset($_SESSION['success'])){
-        echo '<div class="alert alert-success" role="alert">'.$_SESSION['success'].'</div>';
-        require "./scripts/database.php";
-var_dump($database);
+    if(isset($_GET['loggedIn'])){
+        echo '<div class="alert alert-success" role="alert">'."Welcome to Team Aces Portal".'</div>';
     }
     
     ?>

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Team Aces Sign-up Page</title>
+	<title>Team Aces Log-in Page</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/util.css">
@@ -17,37 +17,27 @@
 		<div class="container-login100">
 			<div class="wrap-login100">
 					<?php 
-					if (isset($_SESSION['errors'])){
-						foreach ($_SESSION['errors'] as $error) {
+					if (isset($_SESSION['loginError'])){
+						foreach ($_SESSION['loginError'] as $error) {
 							echo '<div class="alert alert-danger" role="alert">'.$error.'</div>';
 							unset($errors);
 						}
-						unset($_SESSION['errors']);
+						unset($_SESSION['loginError']);
+					}
+					if(isset($_GET['success'])){
+						echo '<div class="alert alert-success" role="alert">'.'Sign up was successful, please use your registration details to login'.'</div>';
 					}
 					?>
 				<form 
-				action="./scripts/signup.php"
+				action="./scripts/login.php"
             	method="post"
 				class="login100-form validate-form">
 					<span class="login100-form-title pb-1">
-						Sign Up
+						Welcome
 					</span>
-					<h6 style="text-align: center;">It's free and only takes a minute. </h6>
-					
-					<div class="wrap-input100 my-4">
-						<input class="input100" type="text" name="firstname">
-						<span class="focus-input100" data-placeholder="firstname"></span>
-					</div>
-
-					<div class="wrap-input100 my-4">
-						<input class="input100" type="text" name="lastname">
-						<span class="focus-input100" data-placeholder="lastname"></span>
-					</div>
-
-					<div class="wrap-input100 my-4">
-						<input class="input100" type="email" name="emailAddress">
-						<span class="focus-input100" data-placeholder="Enter your Email address"></span>
-					</div>
+					<span class="login100-form-avatar">
+						<img src="images/avatar1.jpg" alt="AVATAR">
+					</span>
 
 					<div class="wrap-input100 my-4">
 						<input class="input100" type="text" name="username">
@@ -59,21 +49,14 @@
 						<span class="focus-input100" data-placeholder="Password"></span>
 					</div>
 
-					<div class="wrap-input100 mb-3">
-						<input class="input100" type="password" name="confirmPassword">
-						<span class="focus-input100" data-placeholder="confirm your password"></span>
-					</div>
-
 					<div class="container-login100-form-btn add-paddingtop">
-						<button class="login100-form-btn" type="submit" name="signup-submit">
-							Signup
+						<button class="login100-form-btn" type="submit" name="login-submit">
+							Login
 						</button>
-						
-						<h6>By clicking the sign up button you agree to our <a href="" style="color: aquamarine"> Terms & Conditions.</a>  and <a href="" style="color: aquamarine"> Privacy Policy</a></h6>
-						<div>
-							Already Have an Account?
-							<a href="login.php">Login</a>
-						</div>
+					</div>
+					<div>
+						Don't have an account?
+						<a href="index.php"  style="color: aquamarine">Sign Up</a>
 					</div>
 				</form>
 			</div>

@@ -1,52 +1,56 @@
 <?php
 session_start();
 
-
 if(isset($_POST['login-submit'])){
-//user clicked submit button, implement logic
+    
+    //user clicked submit button, implement logic
+require "connection.php";
 
-require "database.php";
-
-$username = $_POST['username'];
+$usernames = $_POST['username'];
 $password = $_POST['password'];
-$_SESSION['errors'] = array();
+$_SESSION['loginError'] = array();
 
 
 
-if(empty($password) && empty($username)){
-    $_SESSION['errors'] [] = "Fill in all fields". "</br>";
-    header('location: ../index.php');
+if(empty($password) && empty($usernames)){
+    $_SESSION['loginError'] [] = "Fill in all fields". "</br>";
+    header('location: ../login.php');
     exit();
 }
-else if(!preg_match("/^[a-zA-Z0-9]*$/", $username)){
-	$_SESSION['errors'][] = "Username should contain only alphanumeric characters". "</br>";
-    header('location: ../index.php');
+else if(!preg_match("/^[a-zA-Z0-9]*$/", $usernames)){
+	$_SESSION['loginError'][] = "Username should contain only alphanumeric characters". "</br>";
+    header('location: ../login.php');
     exit();
 }
-else if(empty($username)){
-	$_SESSION['errors'][] = "Username is a required field". "</br>";
-    header('location: ../index.php');
+else if(empty($usernames)){
+	$_SESSION['loginError'][] = "Username is a required field". "</br>";
+    header('location: ../login.php');
     exit();
 }
 
 else if(empty($password)){
-    $_SESSION['errors'][] = "Password is a required field". "</br>";
-    header('location: ../index.php');
+    $_SESSION['loginError'][] = "Password is a required field". "</br>";
+    header('location: ../login.php');
     exit();
 }
 
 else{
-    //search fake database for corresponding username
         
-    foreach($database as $result) {
-        if($username == $result->username && password_verify($password, $result->hashedPwd)){
-            $_SESSION['success'] = "Logged in successfully";
-            header ("location: ../welcome.php");
-        }else{
-            $_SESSION['errors'][] = "Invalid login credentials". "</br>";
-            header('location: ../index.php');
-        }
-      }
+    $sql = "SELECT * FROM users WHERE usernames='$usernames'";
+
+    
+    $result = $conn->query($sql);
+    
+    $user = $result->fetch(PDO::FETCH_ASSOC);
+    
+	if($usernames !== $user['usernames'] || !password_verify($password, $user['password'])){
+        $_SESSION['loginError'][] = "User not found. Please click on the Sign Up link to create an Account";
+		header("location: login.php");
+		exit;
+    }elseif($usernames === $user['usernames'] && password_verify($password, $user['password'])){
+		header("location: ../success.php?loggedIn=");
+		exit;
+	}
       
 
 }
@@ -54,6 +58,6 @@ else{
 else{
 //user did not click submit but got here through url modification redirect back to login page
 
-header('location: ../index.php');
+header('location: ../login.php');
 exit();
 }
