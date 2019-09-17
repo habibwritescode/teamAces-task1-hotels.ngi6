@@ -2,7 +2,7 @@
 session_start();
 
 if(isset($_POST['login-submit'])){
-    
+
     //user clicked submit button, implement logic
 require "connection.php";
 
@@ -44,7 +44,7 @@ else{
     $user = $result->fetch(PDO::FETCH_ASSOC);
     
 	if($usernames !== $user['usernames'] || !password_verify($password, $user['password'])){
-        $_SESSION['loginError'][] = "User not found. Please click on the Sign Up link to create an Account";
+        $_SESSION['loginError'][] = "Invalid login credentials. Please crosscheck your login details or click on the Sign Up link to create an Account";
 		header("location: login.php");
 		exit;
     }elseif($usernames === $user['usernames'] && password_verify($password, $user['password'])){
