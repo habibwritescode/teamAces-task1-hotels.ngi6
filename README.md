@@ -12,5 +12,5 @@ It is made up of
 * Sign Up page
 * Login lage
 
-## Link
-
+## Link to hosted page
+https://team-aces.herokuapp.com/
